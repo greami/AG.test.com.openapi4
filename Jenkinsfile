@@ -12,7 +12,7 @@ pipeline
     	}
 	
 		
-	stage("test)
+	stage("test")
 	{
 		steps
 		{
