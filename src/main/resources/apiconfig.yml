@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: AG test open API
+  description: A sample API to illustrate OpenAPI concepts
+servers:
+  - url: http://localhost:8070/api
+paths:
+  /inlog:
+    get:
+      summary: log with basic auth on keycloak and get JWT
+      description: Returns a JWT
+      operationId: getJTW
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          headers:
+            Authorization:
+              schema:
+                type: string
+            Message:
+              schema:
+                type: string
+        '401':
+          description: Not authorized response
+          headers:
+            Authorization:
+              schema:
+                type: string
+            Message:
+              schema:
+                type: string
+
+  /myres:
+    get:
+      summary: ask for a resource using JWT
+      description: Returns resource in JWT validated
+      operationId: getResource
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetail'
+        '401':
+          description: Not authorized response
+          headers:
+            Message:
+              schema:
+                type: string
+
+components:
+  schemas:
+    UserDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: -1
+        username:
+          description: User username
+          type: string
+          default: "_user_name_"
+        name:
+          description: User name
+          type: string
+          default: "_name_"
+        surname:
+          description: User surname
+          type: string
+          default: "_surname_"
